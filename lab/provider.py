@@ -29,6 +29,9 @@ def complete(system, prompt, model, temperature):
             'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': prompt}]}
     if temperature is not None:
         body['temperature'] = temperature
+    if os.environ.get('LAB_PROVIDER_ROUTE'):
+        body['provider'] = {'only': [os.environ['LAB_PROVIDER_ROUTE']],
+                            'allow_fallbacks': False, 'require_parameters': True}
     audit = Audit()
     audit.ensure_room(.01)
     try:

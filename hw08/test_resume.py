@@ -4,6 +4,20 @@ from unittest.mock import patch
 
 
 class ResumeTests(unittest.TestCase):
+    def test_priority_route_is_explicit_and_does_not_change_model(self):
+        import tempfile
+        from lab import provider
+        with tempfile.TemporaryDirectory() as d:
+            seen = []
+            def send(body, key):
+                seen.append(body)
+                return {'choices': [{'message': {'content': 'ok'}}], 'usage': {'cost': .001}}
+            with patch.dict(os.environ, {'OPENROUTER_API_KEY': 'test-key', 'LAB_AUDIT_DIR': d,
+                                         'LAB_PROVIDER_ROUTE': 'google-ai-studio/priority'}), patch.object(provider, '_send', send):
+                provider.complete('s', 'p', 'openrouter:google/gemini-2.5-flash', .7)
+            self.assertEqual(seen[0]['model'], 'google/gemini-2.5-flash')
+            self.assertEqual(seen[0]['provider'], {'only': ['google-ai-studio/priority'], 'allow_fallbacks': False, 'require_parameters': True})
+
     def test_successful_prefix_is_replayed_once_then_only_new_calls_are_paid(self):
         from hw08.calibrate import Resume
         body = {'model': 'google/gemini-2.5-flash', 'max_tokens': 400, 'temperature': .7,

@@ -19,7 +19,7 @@ x-eval-env: &eval-env
   TRACES: ${TRACES:-}
   PYTHONDONTWRITEBYTECODE: "1"
   LAB_AUDIT_DIR: ${LAB_AUDIT_DIR:-hw08/evidence/audit}
-  LAB_SPEND_CAP_USD: ${LAB_SPEND_CAP_USD:-0.90}
+  LAB_SPEND_CAP_USD: ${LAB_SPEND_CAP_USD:-0.85}
 
 services:
   eval:

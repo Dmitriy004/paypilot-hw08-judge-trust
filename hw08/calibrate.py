@@ -23,6 +23,9 @@ class Resume:
             want = {'model': model.removeprefix('openrouter:'), 'max_tokens': 400,
                     'reasoning': {'effort': 'none'}, 'messages': [{'role': 'system', 'content': system},
                     {'role': 'user', 'content': prompt}], 'temperature': temperature}
+            if os.environ.get('LAB_PROVIDER_ROUTE'):
+                want['provider'] = {'only': [os.environ['LAB_PROVIDER_ROUTE']],
+                                    'allow_fallbacks': False, 'require_parameters': True}
             if row['request'] != want:
                 raise ValueError('Resume prefix differs from current frozen prompt/settings')
             self.index += 1
