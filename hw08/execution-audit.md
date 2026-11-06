@@ -34,3 +34,9 @@ Final fresh clone of `3fdc2bc5087d762007e2d2098db2009189de3b24` verified on06.11
 -Publication/submission are completion steps, not evidence already present at reviewed commit74cfe94. Their final status is reported only after verification.
 
 Deferred minors: none from this homework review.
+
+## Publication and handoff
+
+Published public repository: https://github.com/Dmitriy004/paypilot-hw08-judge-trust, default branch main. GitHub API and git ls-remote both verified the published implementation head `c4b3415394229ed538ffa62c8a25a4280ebca4da`; all required statement, datasets, rubric changelog, audited report and execution-audit blobs were present. This publication-status note is a subsequent documentation-only commit.
+
+LMS submission is **pending**, not claimed complete. The correct GoIT page still displayed «Завдання очікує виконання» with an empty submission editor. Native Chrome activation failed after fresh window recovery; the browser connection listed the correct tab but page interaction failed as well. No submit action succeeded and no submitted-state confirmation was observed. The ready public URL can be submitted once UI access is restored.
