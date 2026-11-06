@@ -46,7 +46,10 @@ def _judge(question, answer, rubric):
     if JUDGE_MODEL == "not-used":
         raise JudgeUnavailable("judge not configured (set JUDGE_MODEL)")
     from judge import verdict
-    return verdict(question, answer, rubric, JUDGE_MODEL)
+    try:
+        return verdict(question, answer, rubric, JUDGE_MODEL)
+    except ValueError as e:
+        return False, f"invalid_judge_output: {e}"
 
 
 def evaluate(case: dict, results: list[dict]) -> A.Verdict:
