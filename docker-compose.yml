@@ -8,7 +8,7 @@ x-eval: &eval
       required: false
   volumes:
     - .:/course/solutions/evals
-    - ${STAND_DIR:-../paypilot-stand}/app:/course/app:ro
+    - ${STAND_DIR:-../paypilot-stand-shared}/app:/course/app:ro
 
 x-eval-env: &eval-env
   SET: ${SET:-l09}
@@ -18,6 +18,8 @@ x-eval-env: &eval-env
   REPEAT: ${REPEAT:-}
   TRACES: ${TRACES:-}
   PYTHONDONTWRITEBYTECODE: "1"
+  LAB_AUDIT_DIR: ${LAB_AUDIT_DIR:-hw08/evidence/audit}
+  LAB_SPEND_CAP_USD: ${LAB_SPEND_CAP_USD:-0.90}
 
 services:
   eval:

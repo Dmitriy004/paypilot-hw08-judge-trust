@@ -460,7 +460,7 @@ def main() -> int:
     out.write_text(json.dumps(record, indent=2, ensure_ascii=False),
                    encoding="utf-8")
     print(f"report -> {out.relative_to(HERE.parent)}")
-    return 0 if passed == len(graded) else 1
+    return 0 if not skipped and passed == len(graded) else 1
 
 
 if __name__ == "__main__":

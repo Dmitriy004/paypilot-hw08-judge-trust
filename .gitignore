@@ -1,3 +1,8 @@
-reports/
+hw08/private/
+lab/private/
+.idea/
+.serena/
+*.log
+*.tmp
 .env
 __pycache__/

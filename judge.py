@@ -7,7 +7,7 @@ import time
 import urllib.error
 import urllib.request
 
-RUBRIC_VERSION = "rubric.v1"
+RUBRIC_VERSION = os.environ.get("RUBRIC_VERSION", "rubric.v1")
 
 SYSTEM = """You are a quality judge for a bank support agent. You are given a
 customer question, the agent's answer, and a rubric. Apply the rubric exactly
@@ -95,12 +95,19 @@ def _parse(raw: str) -> dict:
 def judge(question: str, answer: str, rubric: str,
           model: str | None = None, temperature: float | None = None) -> dict:
     model = model or os.environ.get("JUDGE_MODEL") or "claude-haiku-5-5"
+    if os.environ.get("JUDGE_RUBRIC_APPEND"):
+        from pathlib import Path
+        rubric += "\n\n" + Path(os.environ["JUDGE_RUBRIC_APPEND"]).read_text(encoding="utf-8").strip()
     prompt = (f"CUSTOMER QUESTION:\n{question}\n\n"
               f"AGENT ANSWER:\n{answer}\n\n"
               f"RUBRIC:\n{rubric}\n\nJSON:")
-    raw = (_ollama(prompt, model, temperature)
-           if model.startswith("ollama:") or os.environ.get("JUDGE_BACKEND") == "ollama"
-           else _anthropic(prompt, model, temperature))
+    if model.startswith("openrouter:"):
+        from lab.provider import complete
+        raw = complete(SYSTEM, prompt, model, temperature)
+    else:
+        raw = (_ollama(prompt, model, temperature)
+               if model.startswith("ollama:") or os.environ.get("JUDGE_BACKEND") == "ollama"
+               else _anthropic(prompt, model, temperature))
     out = _parse(raw)
     out["judge_model"] = model
     out["rubric_version"] = RUBRIC_VERSION
