@@ -1,11 +1,11 @@
 {
-  "model": "openrouter:google/gemini-2.5-flash",
+  "model": "openrouter:openai/gpt-4.1-mini",
   "temperature": 0.7,
   "max_tokens": 400,
-  "reasoning": {"effort": "none"},
-  "provider": {"only": ["google-ai-studio/priority"], "allow_fallbacks": false, "require_parameters": true},
+  "reasoning": null,
+  "provider": {"only": ["openai"], "allow_fallbacks": false, "require_parameters": true},
   "primary_records": "hw08/evidence/audit",
   "pilot_records": "hw08/evidence/pilot",
   "main_spend_cap_usd": 0.85,
-  "baseline_prediction_unchanged": "hw08/prediction.md"
+  "baseline_prediction": "hw08/prediction-gpt41.md"
 }

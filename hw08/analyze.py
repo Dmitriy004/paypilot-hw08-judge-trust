@@ -12,7 +12,7 @@ from lab.reference import core_hash
 from loader import load
 
 
-def audit_phase(records, cases, clarification=''):
+def audit_phase(records, cases, clarification='', provider_preferences=None, model_name='google/gemini-2.5-flash'):
     prompts = {}
     for c in cases:
         rubric = c['additional_metadata']['rubric'] + ('\n\n' + clarification.strip() if clarification else '')
@@ -23,15 +23,17 @@ def audit_phase(records, cases, clarification=''):
     votes, evidence = {c['id']: [] for c in cases}, []
     for r in records:
         body, response = r['request'], r['response']
+        if body.get('provider') != provider_preferences:
+            raise ValueError('Provider routing changed inside controlled phase')
         if (body.get('model'), body.get('temperature'), body.get('max_tokens'), body.get('reasoning')) != \
-                ('google/gemini-2.5-flash', .7, 400, {'effort': 'none'}):
+                (model_name, .7, 400, None if model_name.startswith('openai/gpt-4.1') else {'effort': 'none'}):
             raise ValueError('Experimental model/settings changed')
         if body['messages'][0] != {'role': 'system', 'content': judge.SYSTEM}:
             raise ValueError('SYSTEM changed')
         c = prompts.get(body['messages'][1]['content'])
         if c is None:
             raise ValueError('Raw prompt is not an unchanged frozen input/answer/criterion')
-        if response.get('model') != 'google/gemini-2.5-flash' or r['cost_usd'] is None:
+        if response.get('model') != model_name or r['cost_usd'] is None:
             raise ValueError('Unknown model or actual cost')
         parsed = judge._parse(response['choices'][0]['message']['content'])
         votes[c['id']].append(parsed['verdict'])
@@ -42,7 +44,7 @@ def audit_phase(records, cases, clarification=''):
     versions = {r['rubric_version'] for r in records}
     if len(versions) != 1:
         raise ValueError('Mixed rubric versions in one phase')
-    out.update(rubric_version=versions.pop(), judge_model='openrouter:google/gemini-2.5-flash',
+    out.update(rubric_version=versions.pop(), judge_model='openrouter:' + model_name,
                evidence=evidence, invalid_quotes=[e for e in evidence if not e['quote_valid']],
                cost_usd=sum(r['cost_usd'] for r in records),
                input_tokens=sum(r['response']['usage']['prompt_tokens'] for r in records),
@@ -75,6 +77,29 @@ def exact_cost(records, traces):
             'response_reported_rounded_usd': sum(r['cost_usd'] for r in records)}
 
 
+def accounting(records, traces, reconciliation=None):
+    accepted = [r for r in records if r['kind'] == 'agent' or (r['response'] or {}).get('choices')]
+    rejected = [r for r in records if r not in accepted]
+    known = exact_cost(accepted, traces)
+    known['accepted_boundary_records'] = known['boundary_records']
+    known['boundary_records'] = len(records)
+    known['transport_error_attempts'] = len(rejected)
+    known['known_accepted_usd'] = known['actual_usd']
+    if rejected:
+        if any((r['response'] or {}).get('http_status') != 429 for r in rejected):
+            raise ValueError('Unresolved non-rate-limit response; exact model-call count unknown')
+        if reconciliation is None:
+            known.update(actual_usd=None, unresolved_transport_attempts=[r['file'] for r in rejected])
+        else:
+            delta = reconciliation['provider_usage_delta_usd']
+            residual = delta - known['actual_usd']
+            if abs(residual) > 1e-9:
+                raise ValueError('Provider delta does not reconcile accepted calls plus rejected transport attempts')
+            known.update(actual_usd=delta, rejected_transport_cost_residual_usd=0.0,
+                         unresolved_transport_attempts=[], reconciliation_source='hw08/provider-reconciliation.json')
+    return known
+
+
 def build():
     manifest = json.loads(Path('hw08/manifest.json').read_text(encoding='utf-8'))
     canonical, runtime = Path(manifest['canonical']), Path(manifest['runtime_alias'])
@@ -83,18 +108,24 @@ def build():
     cases = load(runtime)
     if core_hash(cases) != manifest['core_hash']:
         raise ValueError('Frozen semantic reference changed')
-    records = sorted((json.loads(p.read_text(encoding='utf-8')) | {'file': p.as_posix()}
-                      for p in Path('hw08/evidence/audit').glob('*.json')), key=lambda r: r['at_utc'])
+    records = sorted((json.loads(p.read_text(encoding='utf-8')) | {'file': p.as_posix(), 'scope': folder}
+                      for folder in ('audit', 'pilot') for p in Path('hw08/evidence', folder).glob('*.json')), key=lambda r: r['at_utc'])
     traces = [json.loads(p.read_text(encoding='utf-8')) | {'file': p.as_posix()}
               for p in sorted(Path('reports/traces').rglob('*.json'))]
+    reconcile_path = Path('hw08/provider-reconciliation.json')
+    reconciliation = json.loads(reconcile_path.read_text(encoding='utf-8')) if reconcile_path.exists() else None
+    config = json.loads(Path('hw08/run-config.json').read_text(encoding='utf-8'))
     out = {'set_hash': manifest['set_sha256'][:12], 'core_hash': manifest['core_hash'], 'phases': {},
-           'cost': exact_cost(records, traces), 'agent_runs': []}
+           'cost': accounting(records, traces, reconciliation), 'agent_runs': [],
+           'transport_errors': [{'file': r['file'], 'at_utc': r['at_utc'], 'http_status': (r['response'] or {}).get('http_status'),
+                                'guard_reserve_usd': r['guard_cost_usd']} for r in records if not (r['response'] or {}).get('choices') and r['kind'] == 'judge'],
+           'pilot_accepted_votes': sum(r['scope'] == 'pilot' and r['phase'] == 'baseline' and bool((r['response'] or {}).get('choices')) for r in records)}
     for phase in ('baseline', 'after'):
-        selected = [r for r in records if r['phase'] == phase]
+        selected = [r for r in records if r['scope'] == 'audit' and r['phase'] == phase and (r['response'] or {}).get('choices')]
         if not selected:
             continue
         clarification = Path('rubric/v2.md').read_text(encoding='utf-8').strip() if phase == 'after' else ''
-        s = audit_phase(selected, cases, clarification)
+        s = audit_phase(selected, cases, clarification, config['provider'], config['model'].removeprefix('openrouter:'))
         candidates = []
         last_call = datetime.fromisoformat(selected[-1]['at_utc'])
         for p in Path('reports').glob('calibration-l09_labels-*.json'):

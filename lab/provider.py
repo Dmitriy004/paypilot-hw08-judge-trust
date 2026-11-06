@@ -27,6 +27,8 @@ def complete(system, prompt, model, temperature):
     body = {'model': model.removeprefix('openrouter:'), 'max_tokens': 400,
             'reasoning': {'effort': 'none'},
             'messages': [{'role': 'system', 'content': system}, {'role': 'user', 'content': prompt}]}
+    if body['model'].startswith('openai/gpt-4.1'):
+        body.pop('reasoning')
     if temperature is not None:
         body['temperature'] = temperature
     if os.environ.get('LAB_PROVIDER_ROUTE'):

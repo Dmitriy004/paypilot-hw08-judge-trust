@@ -3,6 +3,20 @@ import unittest
 
 
 class AnalysisTests(unittest.TestCase):
+    def test_transport_errors_remain_pending_until_provider_delta_reconciles(self):
+        from hw08.analyze import accounting
+        known = {'kind': 'judge', 'response': {'choices': [{}]}, 'cost_usd': .002, 'file': 'known.json'}
+        error = {'kind': 'judge', 'response': {'http_status': 429}, 'cost_usd': None, 'file': '429.json'}
+        pending = accounting([known, error], [])
+        self.assertIsNone(pending['actual_usd'])
+        self.assertEqual(pending['unresolved_transport_attempts'], ['429.json'])
+        done = accounting([known, error], [], {'provider_usage_delta_usd': .002})
+        self.assertEqual(done['actual_usd'], .002)
+        self.assertEqual(done['rejected_transport_cost_residual_usd'], 0)
+        self.assertEqual(done['provider_llm_calls'], 1)
+        with self.assertRaises(ValueError):
+            accounting([known, error], [], {'provider_usage_delta_usd': .003})
+
     def test_missing_paid_agent_trace_blocks_exact_cost_and_later_responses_remain(self):
         from hw08.analyze import exact_cost
         rows = [{'kind': 'agent', 'response': {'request_id': rid}, 'cost_usd': .01} for rid in ('r1', 'r2')]
