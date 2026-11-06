@@ -4,6 +4,15 @@ from unittest.mock import patch
 
 
 class ResumeTests(unittest.TestCase):
+    def test_live_prefix_uses_effective_environment_temperature(self):
+        from hw08.calibrate import Resume
+        body = {'model': 'openai/gpt-4.1-mini', 'max_tokens': 400, 'temperature': .7,
+                'provider': {'only': ['openai'], 'allow_fallbacks': False, 'require_parameters': True},
+                'messages': [{'role': 'system', 'content': 's'}, {'role': 'user', 'content': 'p'}]}
+        cached = [{'request': body, 'response': {'choices': [{'message': {'content': 'saved'}}]}}]
+        with patch.dict(os.environ, {'TEMP': '.7', 'LAB_PROVIDER_ROUTE': 'openai'}):
+            self.assertEqual(Resume(cached, lambda *a: self.fail('must not charge'))('s', 'p', 'openrouter:openai/gpt-4.1-mini', None), 'saved')
+
     def test_nonreasoning_gpt41_omits_unsupported_reasoning_parameter(self):
         import tempfile
         from lab import provider
@@ -47,7 +56,7 @@ class ResumeTests(unittest.TestCase):
         self.assertFalse(paid)
         self.assertEqual(resume('s', 'p2', 'openrouter:google/gemini-2.5-flash', .7), 'fresh')
         self.assertEqual(len(paid), 1)
-        with self.assertRaises(ValueError):
+        with self.assertRaises(RuntimeError):
             Resume(cached, live, interval=0)('s', 'changed', 'openrouter:google/gemini-2.5-flash', .7)
 
     def test_provider_account_identifier_is_redacted_in_nested_raw_error(self):

@@ -27,5 +27,5 @@ class LiveResumeTests(unittest.TestCase):
         self.assertFalse(real)
         self.assertEqual(wrapped('POST', '/chat', {'message': 'new'})['request_id'], 'r2')
         self.assertEqual(real, ['/chat'])
-        with self.assertRaises(ValueError):
+        with self.assertRaises(RuntimeError):
             resume_calls(live, [row], {'r1': tree})('POST', '/chat', {'message': 'wrong'})

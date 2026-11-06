@@ -12,7 +12,7 @@ def resume_calls(live, cached, traces):
         if method == 'POST' and path == '/chat' and index < len(cached):
             row = cached[index]
             if row['request']['payload'] != payload:
-                raise ValueError('Live resume prefix differs from saved question/customer/session')
+                raise RuntimeError('Live resume prefix differs from saved question/customer/session')
             index += 1
             return row['response']
         if method == 'GET' and path.startswith('/api/_test/traces/'):

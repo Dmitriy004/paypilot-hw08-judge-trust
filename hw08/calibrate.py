@@ -18,6 +18,8 @@ class Resume:
         self.index, self.last = 0, 0.0
 
     def __call__(self, system, prompt, model, temperature):
+        if temperature is None and os.environ.get('TEMP'):
+            temperature = float(os.environ['TEMP'])
         if self.index < len(self.cached):
             row = self.cached[self.index]
             want = {'model': model.removeprefix('openrouter:'), 'max_tokens': 400,
@@ -29,7 +31,7 @@ class Resume:
                 want['provider'] = {'only': [os.environ['LAB_PROVIDER_ROUTE']],
                                     'allow_fallbacks': False, 'require_parameters': True}
             if row['request'] != want:
-                raise ValueError('Resume prefix differs from current frozen prompt/settings')
+                raise RuntimeError('Resume prefix differs from current frozen prompt/settings')
             self.index += 1
             return row['response']['choices'][0]['message']['content']
         remaining = self.interval - (time.monotonic() - self.last)

@@ -100,6 +100,21 @@ def accounting(records, traces, reconciliation=None):
     return known
 
 
+def unique_traces(traces):
+    selected, copies = {}, []
+    for row in traces:
+        rid = row['trace']['request_id']
+        if rid in selected:
+            before = {k: v for k, v in selected[rid].items() if k != 'file'}
+            after = {k: v for k, v in row.items() if k != 'file'}
+            if before != after:
+                raise ValueError('Conflicting trace copies for one actual request_id')
+            copies.append(row['file'])
+        else:
+            selected[rid] = row
+    return list(selected.values()), copies
+
+
 def build():
     manifest = json.loads(Path('hw08/manifest.json').read_text(encoding='utf-8'))
     canonical, runtime = Path(manifest['canonical']), Path(manifest['runtime_alias'])
@@ -112,6 +127,7 @@ def build():
                       for folder in ('audit', 'pilot') for p in Path('hw08/evidence', folder).glob('*.json')), key=lambda r: r['at_utc'])
     traces = [json.loads(p.read_text(encoding='utf-8')) | {'file': p.as_posix()}
               for p in sorted(Path('reports/traces').rglob('*.json'))]
+    traces, trace_copies = unique_traces(traces)
     reconcile_path = Path('hw08/provider-reconciliation.json')
     reconciliation = json.loads(reconcile_path.read_text(encoding='utf-8')) if reconcile_path.exists() else None
     config = json.loads(Path('hw08/run-config.json').read_text(encoding='utf-8'))
@@ -119,7 +135,8 @@ def build():
            'cost': accounting(records, traces, reconciliation), 'agent_runs': [],
            'transport_errors': [{'file': r['file'], 'at_utc': r['at_utc'], 'http_status': (r['response'] or {}).get('http_status'),
                                 'guard_reserve_usd': r['guard_cost_usd']} for r in records if not (r['response'] or {}).get('choices') and r['kind'] == 'judge'],
-           'pilot_accepted_votes': sum(r['scope'] == 'pilot' and r['phase'] == 'baseline' and bool((r['response'] or {}).get('choices')) for r in records)}
+           'pilot_accepted_votes': sum(r['scope'] == 'pilot' and r['phase'] == 'baseline' and bool((r['response'] or {}).get('choices')) for r in records),
+           'replayed_trace_copies': trace_copies}
     for phase in ('baseline', 'after'):
         selected = [r for r in records if r['scope'] == 'audit' and r['phase'] == phase and (r['response'] or {}).get('choices')]
         if not selected:

@@ -3,6 +3,16 @@ import unittest
 
 
 class AnalysisTests(unittest.TestCase):
+    def test_resumed_trace_copies_do_not_duplicate_actual_agent_turns(self):
+        from hw08.analyze import unique_traces
+        a = {'case': 'X', 'run': 1, 'answer': 'a', 'trace': {'request_id': 'r1'}, 'file': 'old.json'}
+        b = {**a, 'file': 'resumed.json'}
+        unique, copies = unique_traces([a, b])
+        self.assertEqual(len(unique), 1)
+        self.assertEqual(copies, ['resumed.json'])
+        with self.assertRaises(ValueError):
+            unique_traces([a, {**b, 'answer': 'different'}])
+
     def test_transport_errors_remain_pending_until_provider_delta_reconciles(self):
         from hw08.analyze import accounting
         known = {'kind': 'judge', 'response': {'choices': [{}]}, 'cost_usd': .002, 'file': 'known.json'}
