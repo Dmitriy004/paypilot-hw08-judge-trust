@@ -1,0 +1,14 @@
+{
+  "kit_commit": "f5c235aa10a505f9d6f9e422ffd66917578c537b",
+  "stand_commit": "74f1995ca8e8e64e4526e374535c2c4e71a2bde1",
+  "core_hash": "d8a94d7a9e3ea91673e94ba7663cd82bab7136513beef739e5223c5e2fc630fe",
+  "set_sha256": "2aad1fe9f81acf2210c707c51d9c7b3207bac2557021c5822d9bdb39217a7f0a",
+  "labeled_at_utc": "2026-11-06T16:16:50Z",
+  "cases": 30,
+  "obvious_pass": 10,
+  "obvious_fail": 10,
+  "disputed": 10,
+  "previously_scored_LB_answers_reused": 0,
+  "canonical": "evals/sets/l09_labels.jsonl",
+  "runtime_alias": "sets/l09_labels.jsonl"
+}
