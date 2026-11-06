@@ -12,7 +12,14 @@ from lab.reference import core_hash
 from loader import load
 
 
+def validate_generation_ids(records):
+    ids = [(r.get('response') or {}).get('id') for r in records]
+    if any(not isinstance(rid, str) or not rid.strip() for rid in ids) or len(set(ids)) != len(ids):
+        raise ValueError('Missing or duplicate provider generation ID')
+
+
 def audit_phase(records, cases, clarification='', provider_preferences=None, model_name='google/gemini-2.5-flash'):
+    validate_generation_ids(records)
     prompts = {}
     for c in cases:
         rubric = c['additional_metadata']['rubric'] + ('\n\n' + clarification.strip() if clarification else '')
@@ -55,6 +62,7 @@ def audit_phase(records, cases, clarification='', provider_preferences=None, mod
 
 
 def exact_cost(records, traces):
+    validate_generation_ids([r for r in records if r['kind'] == 'judge'])
     agents = [r for r in records if r['kind'] == 'agent']
     traced = {t['trace']['request_id']: t['trace'] for t in traces}
     ids = [r['response']['request_id'] for r in agents if r['response']]
