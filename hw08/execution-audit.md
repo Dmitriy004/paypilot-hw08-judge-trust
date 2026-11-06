@@ -39,4 +39,6 @@ Deferred minors: none from this homework review.
 
 Published public repository: https://github.com/Dmitriy004/paypilot-hw08-judge-trust, default branch main. GitHub API and git ls-remote both verified the published implementation head `c4b3415394229ed538ffa62c8a25a4280ebca4da`; all required statement, datasets, rubric changelog, audited report and execution-audit blobs were present. This publication-status note is a subsequent documentation-only commit.
 
-LMS submission is **pending**, not claimed complete. The correct GoIT page still displayed «Завдання очікує виконання» with an empty submission editor. Native Chrome activation failed after fresh window recovery; the browser connection listed the correct tab but page interaction failed as well. No submit action succeeded and no submitted-state confirmation was observed. The ready public URL can be submitted once UI access is restored.
+The first submission attempt was blocked by native-window and browser-interface errors; it was correctly recorded as pending rather than successful. After UI access was restored, the public repository URL was entered into the GoIT homework editor and submitted on06.11.2026 (verified by20:07UTC /21:07 Warsaw).
+
+**Submission verified:** the page displayed «Ти відправив домашнє завдання», «Супер, ментор скоро це перевірить» and the submitted repository URL. Its status was «Завдання на перевірці». This is successful submission awaiting mentor review, not a claim of acceptance.
