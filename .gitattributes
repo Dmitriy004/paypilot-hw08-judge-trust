@@ -2,3 +2,5 @@
 *.json text eol=lf
 *.py text eol=lf
 *.md text eol=lf
+# Preserve the exact working-set bytes whose hash is retained in live reports.
+sets/l09_escalation.jsonl -text

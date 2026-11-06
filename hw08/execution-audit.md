@@ -18,7 +18,9 @@ Fresh whole-branch review independently reproduced the references,150 distinct g
 1. Incomplete/duplicated/relabelled reports could pass the offline gate. Regression removed actual PL-01/05/16 failures and produced exit0 before the fix; now invalid archives return2. Replay validates canonical/runtime bytes, manifest/core/set hashes, exact ID coverage, labels/disputed flags and five votes. Malformed JSON/report shapes also return2.
 2. A copied provider generation could replace a missing vote while preserving count/votes/cost. Regression on actual baseline evidence failed before the fix; now missing/duplicate generation IDs are rejected both within a phase and across all accepted judge records used in accounting. Identical output text from distinct IDs remains valid.
 
-Both fixes were made in one offline RED→GREEN pass without paid calls, relabeling or changing reported votes. Final results:30/30 local tests; the complete after-report still returns exit1; raw analysis still reproduces27/30 agreement,29/30 stability for both phases and$0.100849845. Final clean-clone/Docker confirmation is appended after execution.
+Both fixes were made in one offline RED→GREEN pass without paid calls, relabeling or changing reported votes. Results:30/30 local tests; the complete after-report still returns exit1; raw analysis still reproduces27/30 agreement,29/30 stability for both phases and$0.100849845.
+
+The final clean-clone check also exposed newline normalization of the working JSONL: live byte hash70f163adf8c1 became2cce8501487e on checkout, although parsed cases were identical. An assertion against the retained report failed on that clone. The exact originally measured bytes are now stored with a specific `.gitattributes -text` rule, plus `test_working_set_byte_hash_matches_retained_live_reports`; no case or report was rewritten. Canonical calibration aliases remain LF and retain their frozen hash. The first dry-run check was repeated after removing an early-terminating stdout pipeline; both full-output dry-runs exited0.
 
 ## Review scope decisions
 

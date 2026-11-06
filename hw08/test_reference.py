@@ -3,7 +3,7 @@ import unittest
 from collections import Counter
 from pathlib import Path
 
-from loader import load
+from loader import load, set_hash
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -41,3 +41,8 @@ class ReferenceTests(unittest.TestCase):
         self.assertEqual((m['assertion'], m['runs'], m['gate']), ('tool_sequence', 1, 'daily'))
         self.assertIn('escalate_to_human', m['must_include'])
         self.assertEqual(threshold['context']['customer_id'], 'CUS-0007')
+
+    def test_working_set_byte_hash_matches_retained_live_reports(self):
+        for name in ('l09_escalation-clean-20261106T164835.json', 'l09_escalation-lesson-09-20261106T170102.json'):
+            report = json.loads((ROOT / 'reports' / name).read_text(encoding='utf-8'))
+            self.assertEqual(set_hash(ROOT / 'sets/l09_escalation.jsonl'), report['set_hash'])
