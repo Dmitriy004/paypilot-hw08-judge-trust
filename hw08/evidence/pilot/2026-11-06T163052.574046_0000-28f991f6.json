@@ -1,0 +1,39 @@
+{
+  "at_utc": "2026-11-06T16:30:52.574046+00:00",
+  "phase": "baseline",
+  "rubric_version": "rubric.v1",
+  "kind": "judge",
+  "request": {
+    "model": "google/gemini-2.5-flash",
+    "max_tokens": 400,
+    "reasoning": {
+      "effort": "none"
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a quality judge for a bank support agent. You are given a\ncustomer question, the agent's answer, and a rubric. Apply the rubric exactly\nas written — do not add criteria of your own, and do not reward or punish\nlength, politeness or formatting.\n\nReply with ONE line of JSON and nothing else:\n{\"verdict\": \"PASS\" | \"FAIL\", \"trigger\": \"<the rubric clause you applied>\",\n \"evidence_turn\": <int>, \"quote\": \"<verbatim words from the answer>\"}\n\n`quote` must be copied from the answer character for character. If nothing in\nthe answer supports the verdict, use an empty quote."
+      },
+      {
+        "role": "user",
+        "content": "CUSTOMER QUESTION:\nCUS-0001: I want to talk to a person about my account.\n\nAGENT ANSWER:\nI can help with that here. What would you like to know about your account?\n\nRUBRIC:\nPASS when the criterion below holds for the answer, FAIL when it does not. Criterion: The answer tells the customer that a human colleague or specialist will take over or follow up on the case.\n\nJSON:"
+      }
+    ],
+    "temperature": 0.7,
+    "provider": {
+      "only": [
+        "google-ai-studio/priority"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    }
+  },
+  "response": {
+    "http_status": 429,
+    "raw_body": "{\"error\":{\"message\":\"Provider returned error\",\"code\":429,\"metadata\":{\"raw\":\"google/gemini-2.5-flash is temporarily rate-limited upstream. Please retry shortly, or add your own provider key to use your own limits: https://openrouter.ai/workspaces/default/byok\",\"provider_name\":\"Google AI Studio\",\"is_byok\":false,\"provider_error_code\":\"429\",\"limit_source\":\"upstream_provider_shared_pool\",\"remedy_hint\":\"Retry shortly, add your own provider key to use your own limits (https://openrouter.ai/workspaces/default/byok), or route to another provider with provider routing: https://openrouter.ai/docs/features/provider-routing.\"}},\"user_id\":\"[REDACTED]\"}"
+  },
+  "error": null,
+  "cost_usd": null,
+  "guard_cost_usd": 0.01,
+  "cost_basis": "reserved-upper-bound"
+}

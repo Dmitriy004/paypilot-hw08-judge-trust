@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-11-06T16:58:22.319250+00:00",
+  "phase": "working-lesson09",
+  "rubric_version": "rubric.v2",
+  "kind": "agent",
+  "request": {
+    "method": "POST",
+    "path": "/chat",
+    "payload": {
+      "message": "On account ACC-1011, settled TX-1002, GBP 26,000 Supplier invoice 2214, was not authorised by me. Please involve a human specialist and explain the next steps without promising recovery.",
+      "session_id": null,
+      "customer_id": "CUS-0010"
+    }
+  },
+  "response": {
+    "session_id": "7a4ce7b765cb",
+    "request_id": "44d0430382f947ca",
+    "answer": "TX-1002 is eligible for an unauthorised-debit dispute. The deadline is 2026-10-28.\n\nBefore I open the dispute, which is irreversible, please confirm you want me to file it for the full GBP 26,000.00 under the \"unauthorised debit\" reason. Once you confirm, I will open it and hand the case to a human specialist as you requested.",
+    "step_number": 1,
+    "prompt_version": "base.v1+D25+D27",
+    "elapsed_ms": 3837.0,
+    "usage": {
+      "input_tokens": 9360,
+      "output_tokens": 473,
+      "model": "anthropic/claude-haiku-5.5",
+      "cost_usd": 0.000492,
+      "provider_cost_usd": 0.000493
+    }
+  },
+  "error": null,
+  "cost_usd": 0.000493,
+  "guard_cost_usd": 0.000493,
+  "cost_basis": "actual"
+}

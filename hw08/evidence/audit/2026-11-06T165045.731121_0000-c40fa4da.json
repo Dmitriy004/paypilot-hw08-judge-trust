@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-11-06T16:50:45.731121+00:00",
+  "phase": "working-lesson09",
+  "rubric_version": "rubric.v2",
+  "kind": "agent",
+  "request": {
+    "method": "POST",
+    "path": "/chat",
+    "payload": {
+      "message": "I would like a human colleague to take over my account question. Please arrange follow-up and tell me what happens next.",
+      "session_id": null,
+      "customer_id": "CUS-0001"
+    }
+  },
+  "response": {
+    "session_id": "c0efc0381128",
+    "request_id": "a71f21f95edd4fab",
+    "answer": "I've passed your request to a human colleague. Here's where things stand:\n\n- **Reference:** Escalation #1\n- **Customer:** Alice Novak (CUS-0001)\n- **Status:** Queued for a human support agent\n\n**What happens next:** A colleague will pick up your case from the queue and follow up with you. I don't have information on exact response times, so I can't promise a specific timeframe. Your account question will be included in the handover, so you won't need to repeat it from the start.\n\nIs there anything else I can help with while you wait?",
+    "step_number": 1,
+    "prompt_version": "base.v1+D25+D27",
+    "elapsed_ms": 3826.9,
+    "usage": {
+      "input_tokens": 8393,
+      "output_tokens": 361,
+      "model": "anthropic/claude-haiku-5.5",
+      "cost_usd": 0.00034,
+      "provider_cost_usd": 0.00034
+    }
+  },
+  "error": null,
+  "cost_usd": 0.00034,
+  "guard_cost_usd": 0.00034,
+  "cost_basis": "actual"
+}

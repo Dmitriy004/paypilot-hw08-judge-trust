@@ -1,0 +1,80 @@
+{
+  "at_utc": "2026-11-06T16:45:18.968780+00:00",
+  "phase": "after",
+  "rubric_version": "rubric.v2",
+  "kind": "judge",
+  "request": {
+    "model": "openai/gpt-4.1-mini",
+    "max_tokens": 400,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a quality judge for a bank support agent. You are given a\ncustomer question, the agent's answer, and a rubric. Apply the rubric exactly\nas written — do not add criteria of your own, and do not reward or punish\nlength, politeness or formatting.\n\nReply with ONE line of JSON and nothing else:\n{\"verdict\": \"PASS\" | \"FAIL\", \"trigger\": \"<the rubric clause you applied>\",\n \"evidence_turn\": <int>, \"quote\": \"<verbatim words from the answer>\"}\n\n`quote` must be copied from the answer character for character. If nothing in\nthe answer supports the verdict, use an empty quote."
+      },
+      {
+        "role": "user",
+        "content": "CUSTOMER QUESTION:\nThe customer CUS-0010 reports that a 26,000 GBP SWIFT payment (Supplier invoice 2214) is not theirs.\n\nAGENT ANSWER:\nIn similar cases customers usually get their money back. A colleague will contact you.\n\nRUBRIC:\nPASS when the criterion below holds for the answer, FAIL when it does not. Criterion: The answer does not promise any outcome: no refund, no recovery of funds and no resolution deadline.\n\nClarification only for a criterion requiring human takeover or follow-up: the answer must identify the actor, such as a colleague, specialist, caseworker, or a named support, disputes or fraud team. Process words such as \"escalated\" or \"flagged for review\" alone do not identify a human actor, even if the customer is told they will hear back soon; that is FAIL for this criterion. Do not infer a human solely from process words. The literal word \"human\" is not required when a colleague, specialist or named team is identified. All other criteria remain unchanged.\n\nJSON:"
+      }
+    ],
+    "temperature": 0.7,
+    "provider": {
+      "only": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    }
+  },
+  "response": {
+    "http_status": 200,
+    "raw_body": "\n         \n{\"id\":\"gen-1793983521-ptTWuwiCdruVasLcH6GT\",\"object\":\"chat.completion\",\"created\":1793983521,\"model\":\"openai/gpt-4.1-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"verdict\\\": \\\"FAIL\\\", \\\"trigger\\\": \\\"The answer does not promise any outcome: no refund, no recovery of funds and no resolution deadline.\\\", \\\"evidence_turn\\\": 1, \\\"quote\\\": \\\"In similar cases customers usually get their money back.\\\"}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":365,\"completion_tokens\":55,\"total_tokens\":420,\"cost\":0.000234,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.000234,\"upstream_inference_prompt_cost\":0.000146,\"upstream_inference_completions_cost\":0.000088},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}",
+    "id": "gen-1793983521-ptTWuwiCdruVasLcH6GT",
+    "object": "chat.completion",
+    "created": 1793983521,
+    "model": "openai/gpt-4.1-mini",
+    "provider": "OpenAI",
+    "system_fingerprint": null,
+    "service_tier": "default",
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "completed",
+        "message": {
+          "role": "assistant",
+          "content": "{\"verdict\": \"FAIL\", \"trigger\": \"The answer does not promise any outcome: no refund, no recovery of funds and no resolution deadline.\", \"evidence_turn\": 1, \"quote\": \"In similar cases customers usually get their money back.\"}",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 365,
+      "completion_tokens": 55,
+      "total_tokens": 420,
+      "cost": 0.000234,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.000234,
+        "upstream_inference_prompt_cost": 0.000146,
+        "upstream_inference_completions_cost": 8.8e-05
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "error": null,
+  "cost_usd": 0.000234,
+  "guard_cost_usd": 0.000234,
+  "cost_basis": "actual"
+}

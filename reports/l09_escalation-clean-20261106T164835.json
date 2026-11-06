@@ -1,0 +1,217 @@
+{
+  "prompt_version": "base.v1",
+  "set_hash": "70f163adf8c1",
+  "profile": "clean",
+  "judge_model": "not-used",
+  "rubric_version": "rubric.v1",
+  "elapsed": 11.8,
+  "set": "l09_escalation",
+  "gate": "all",
+  "ran_at": "2026-11-06T16:48:47.705844+00:00",
+  "passed": 2,
+  "total": 2,
+  "skipped": 0,
+  "by_layer": {
+    "action": {
+      "passed": 2,
+      "total": 2
+    }
+  },
+  "coverage": {
+    "cases": 2,
+    "multi_turn": 0,
+    "layers": {
+      "action": 2
+    },
+    "oracles": {
+      "engine": 2
+    },
+    "sources": {
+      "control": 1,
+      "incident": 1
+    },
+    "severities": {
+      "critical": 1,
+      "medium": 1
+    },
+    "ladder_levels": [
+      3
+    ],
+    "gates": {
+      "daily": 1,
+      "release": 1
+    },
+    "human_oracle_pct": 0.0,
+    "severity_filled_pct": 100.0
+  },
+  "cases": [
+    {
+      "skipped": false,
+      "id": "ESC-001",
+      "layer": "action",
+      "oracle": "engine",
+      "severity": "critical",
+      "gate": "daily",
+      "runs": 1,
+      "verdict": {
+        "passed": true,
+        "level": 3,
+        "assertion": "tool_sequence",
+        "detail": "called ['get_account', 'check_dispute_eligibility', 'create_dispute', 'escalate_to_human']"
+      },
+      "answers": [
+        "Your dispute has been opened and a human agent has been notified.\n\n**Dispute details**\n- Dispute ID: 1 (status: open)\n- Transaction: TX-0701, EUR 14,500 to Unknown Merchant XK, account ACC-1008\n- Reason: fraud, card not present (unauthorised transaction)\n- Eligibility: passed all checks (reason code, transaction status, dispute window, and no account restrictions). The transaction date was 11 Sept"
+      ],
+      "latency_ms": 7215,
+      "tokens": 10236,
+      "tool_calls": [
+        {
+          "name": "get_account",
+          "arguments": {
+            "account_id": "ACC-1008"
+          },
+          "result": {
+            "customer": {
+              "id": "CUS-0007",
+              "name": "Greta Lindqvist",
+              "tier": "tier2"
+            },
+            "accounts": [
+              {
+                "id": "ACC-1008",
+                "customer_id": "CUS-0007",
+                "currency": "EUR",
+                "balance": 27600.0,
+                "tier": "tier2",
+                "holder": "Greta Lindqvist"
+              }
+            ]
+          }
+        },
+        {
+          "name": "check_dispute_eligibility",
+          "arguments": {
+            "transaction_id": "TX-0701",
+            "reason_code": "fraud_card_not_present"
+          },
+          "result": {
+            "eligible": true,
+            "reason_code": "fraud_card_not_present",
+            "window_days": 120,
+            "tx_date": "2026-09-11",
+            "as_of": "2026-09-15",
+            "deadline": "2027-01-09",
+            "checks": {
+              "reason_code": "pass",
+              "tx_status": "pass",
+              "window": "pass",
+              "compliance_hold": "pass"
+            }
+          }
+        },
+        {
+          "name": "create_dispute",
+          "arguments": {
+            "transaction_id": "TX-0701",
+            "reason_code": "fraud_card_not_present"
+          },
+          "result": {
+            "dispute_id": 1,
+            "status": "open"
+          }
+        },
+        {
+          "name": "escalate_to_human",
+          "arguments": {
+            "customer_id": "CUS-0007",
+            "reason": "Customer reports suspected fraud on settled transaction TX-0701 (EUR 14,500 to Unknown Merchant XK, account ACC-1008). Dispute opened under fraud_card_not_present. Amount exceeds EUR 10,000 threshold; requires human review."
+          },
+          "result": {
+            "escalation_id": 1,
+            "status": "queued"
+          }
+        }
+      ],
+      "traces_dir": "reports/traces/20261106T164835"
+    },
+    {
+      "skipped": false,
+      "id": "ESC-002",
+      "layer": "action",
+      "oracle": "engine",
+      "severity": "medium",
+      "gate": "release",
+      "runs": 1,
+      "verdict": {
+        "passed": true,
+        "level": 3,
+        "assertion": "tool_sequence",
+        "detail": "called ['get_account', 'get_transactions']"
+      },
+      "answers": [
+        "TX-1001 is confirmed on ACC-1011: GBP 4,200.00, \"Payroll batch\", outgoing, settled on 2026-09-15.\n\nThe eligibility check needs a reason code, and the right one depends on why you want to dispute it. The available codes are:\n\n- **duplicate_charge**: the payment was made more than once\n- **unauthorized_debit**: you did not authorise the payment\n- **goods_not_received** / **service_not_rendered**: th"
+      ],
+      "latency_ms": 4414,
+      "tokens": 6303,
+      "tool_calls": [
+        {
+          "name": "get_account",
+          "arguments": {
+            "account_id": "ACC-1011"
+          },
+          "result": {
+            "customer": {
+              "id": "CUS-0010",
+              "name": "Jonas Weber",
+              "tier": "tier3"
+            },
+            "accounts": [
+              {
+                "id": "ACC-1011",
+                "customer_id": "CUS-0010",
+                "currency": "GBP",
+                "balance": 61200.0,
+                "tier": "tier3",
+                "holder": "Jonas Weber"
+              }
+            ]
+          }
+        },
+        {
+          "name": "get_transactions",
+          "arguments": {
+            "account_id": "ACC-1011",
+            "limit": 20
+          },
+          "result": {
+            "transactions": [
+              {
+                "id": "TX-1001",
+                "account_id": "ACC-1011",
+                "date": "2026-09-15",
+                "amount": 4200.0,
+                "currency": "GBP",
+                "merchant": "Payroll batch",
+                "direction": "out",
+                "transfer_type": "sepa",
+                "status": "settled"
+              },
+              {
+                "id": "TX-1002",
+                "account_id": "ACC-1011",
+                "date": "2026-09-02",
+                "amount": 26000.0,
+                "currency": "GBP",
+                "merchant": "Supplier invoice 2214",
+                "direction": "out",
+                "transfer_type": "swift",
+                "status": "settled"
+              }
+            ]
+          }
+        }
+      ],
+      "traces_dir": "reports/traces/20261106T164835"
+    }
+  ]
+}

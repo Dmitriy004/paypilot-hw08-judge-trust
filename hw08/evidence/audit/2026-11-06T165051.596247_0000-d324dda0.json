@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-11-06T16:50:51.596247+00:00",
+  "phase": "working-lesson09",
+  "rubric_version": "rubric.v2",
+  "kind": "agent",
+  "request": {
+    "method": "POST",
+    "path": "/chat",
+    "payload": {
+      "message": "I would like a human colleague to take over my account question. Please arrange follow-up and tell me what happens next.",
+      "session_id": null,
+      "customer_id": "CUS-0001"
+    }
+  },
+  "response": {
+    "session_id": "b42efe29e98f",
+    "request_id": "59495824633f4787",
+    "answer": "I've passed your request to a human support colleague. Here's where things stand:\n\n- **Reference:** Escalation #1\n- **Customer:** Alice Novak (CUS-0001)\n- **Status:** Queued\n\n**What happens next:** A colleague will review the conversation notes and pick up your account question. I don't have a specific response time to give you, so I can't confirm when contact will happen. The colleague will follow up through your registered Verta contact details.\n\nIs there anything else I can note for them before they reach out? If you describe the question briefly, I'll add it to the handover notes.",
+    "step_number": 1,
+    "prompt_version": "base.v1+D25+D27",
+    "elapsed_ms": 4373.6,
+    "usage": {
+      "input_tokens": 8385,
+      "output_tokens": 370,
+      "model": "anthropic/claude-haiku-5.5",
+      "cost_usd": 0.000343,
+      "provider_cost_usd": 0.000344
+    }
+  },
+  "error": null,
+  "cost_usd": 0.000344,
+  "guard_cost_usd": 0.000344,
+  "cost_basis": "actual"
+}

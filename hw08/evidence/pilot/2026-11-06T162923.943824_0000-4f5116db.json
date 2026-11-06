@@ -1,0 +1,83 @@
+{
+  "at_utc": "2026-11-06T16:29:23.943824+00:00",
+  "phase": "route-check",
+  "rubric_version": "rubric.v1",
+  "kind": "judge",
+  "request": {
+    "model": "google/gemini-2.5-flash",
+    "max_tokens": 400,
+    "reasoning": {
+      "effort": "none"
+    },
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return only the requested JSON."
+      },
+      {
+        "role": "user",
+        "content": "Return a JSON object with status equal to ok."
+      }
+    ],
+    "temperature": 0.7,
+    "provider": {
+      "only": [
+        "google-ai-studio/priority"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    }
+  },
+  "response": {
+    "http_status": 200,
+    "raw_body": "\n         \n{\"id\":\"gen-1793982567-qRMiQjrWoPZXFSMcFqwl\",\"object\":\"chat.completion\",\"created\":1793982567,\"model\":\"google/gemini-2.5-flash\",\"provider\":\"Google AI Studio\",\"system_fingerprint\":null,\"service_tier\":\"priority\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"STOP\",\"message\":{\"role\":\"assistant\",\"content\":\"```json\\n{\\n  \\\"status\\\": \\\"ok\\\"\\n}\\n```\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":18,\"completion_tokens\":14,\"total_tokens\":32,\"cost\":0.00007272,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.00007272,\"upstream_inference_prompt_cost\":0.00000972,\"upstream_inference_completions_cost\":0.000063},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}",
+    "id": "gen-1793982567-qRMiQjrWoPZXFSMcFqwl",
+    "object": "chat.completion",
+    "created": 1793982567,
+    "model": "google/gemini-2.5-flash",
+    "provider": "Google AI Studio",
+    "system_fingerprint": null,
+    "service_tier": "priority",
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "STOP",
+        "message": {
+          "role": "assistant",
+          "content": "```json\n{\n  \"status\": \"ok\"\n}\n```",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 18,
+      "completion_tokens": 14,
+      "total_tokens": 32,
+      "cost": 7.272e-05,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 7.272e-05,
+        "upstream_inference_prompt_cost": 9.72e-06,
+        "upstream_inference_completions_cost": 6.3e-05
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "error": null,
+  "cost_usd": 7.272e-05,
+  "guard_cost_usd": 7.272e-05,
+  "cost_basis": "actual"
+}

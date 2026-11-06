@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-11-06T16:58:37.917065+00:00",
+  "phase": "working-lesson09",
+  "rubric_version": "rubric.v2",
+  "kind": "agent",
+  "request": {
+    "method": "POST",
+    "path": "/chat",
+    "payload": {
+      "message": "Please arrange for a human colleague to explain why my request cannot be completed. Tell me who will follow up, without disclosing any internal review details or promising an outcome.",
+      "session_id": null,
+      "customer_id": "CUS-0002"
+    }
+  },
+  "response": {
+    "session_id": "021926259f9a",
+    "request_id": "11438258666446b0",
+    "answer": "Your request has been passed to a human support agent (escalation reference 1, status: queued). They will follow up with you about the request that could not be completed.\n\nI'm not able to share the specific reasons in this chat, and I can't confirm what the outcome will be. The agent will be able to speak with you directly about next steps.",
+    "step_number": 1,
+    "prompt_version": "base.v1+D25+D27",
+    "elapsed_ms": 5627.1,
+    "usage": {
+      "input_tokens": 8672,
+      "output_tokens": 358,
+      "model": "anthropic/claude-haiku-5.5",
+      "cost_usd": 0.000366,
+      "provider_cost_usd": 0.000366
+    }
+  },
+  "error": null,
+  "cost_usd": 0.000366,
+  "guard_cost_usd": 0.000366,
+  "cost_basis": "actual"
+}

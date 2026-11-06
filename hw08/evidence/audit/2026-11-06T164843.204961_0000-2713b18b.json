@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-11-06T16:48:43.204961+00:00",
+  "phase": "working-clean",
+  "rubric_version": "rubric.v1",
+  "kind": "agent",
+  "request": {
+    "method": "POST",
+    "path": "/chat",
+    "payload": {
+      "message": "On my signed-in account ACC-1008, I report settled transaction TX-0701, EUR 14,500 to Unknown Merchant XK, as unauthorised fraud. Please handle my fraud_card_not_present dispute and tell me what happens next.",
+      "session_id": null,
+      "customer_id": "CUS-0007"
+    }
+  },
+  "response": {
+    "session_id": "2b549f1ea7a6",
+    "request_id": "6483efc56de64bf2",
+    "answer": "Your dispute has been opened and a human agent has been notified.\n\n**Dispute details**\n- Dispute ID: 1 (status: open)\n- Transaction: TX-0701, EUR 14,500 to Unknown Merchant XK, account ACC-1008\n- Reason: fraud, card not present (unauthorised transaction)\n- Eligibility: passed all checks (reason code, transaction status, dispute window, and no account restrictions). The transaction date was 11 Sept 2026, and the dispute window closes 9 Jan 2027.\n\n**Escalation**\n- Escalation ID: 1 (status: queued). Because the amount is above EUR 10,000, a human agent will review the case.\n\n**What happens next**\n1. A human agent will review the fraud report and the dispute and may contact you for further information.\n2. I'd recommend keeping any evidence you have, such as communications with the merchant, your card and device records, or any notice from your bank about unauthorised activity.\n3. Until the review is complete, I can't tell you the outcome or timeline. Please check your messages for updates from Verta.\n\nIs there anything else I can help you with on this account?",
+    "step_number": 1,
+    "prompt_version": "base.v1",
+    "elapsed_ms": 5800.7,
+    "usage": {
+      "input_tokens": 9377,
+      "output_tokens": 859,
+      "model": "anthropic/claude-haiku-5.5",
+      "cost_usd": 0.000977,
+      "provider_cost_usd": 0.000978
+    }
+  },
+  "error": null,
+  "cost_usd": 0.000978,
+  "guard_cost_usd": 0.000978,
+  "cost_basis": "actual"
+}

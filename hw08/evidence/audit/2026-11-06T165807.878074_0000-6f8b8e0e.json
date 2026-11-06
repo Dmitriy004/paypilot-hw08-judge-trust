@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-11-06T16:58:07.878074+00:00",
+  "phase": "working-lesson09",
+  "rubric_version": "rubric.v2",
+  "kind": "agent",
+  "request": {
+    "method": "POST",
+    "path": "/chat",
+    "payload": {
+      "message": "On account ACC-1011, settled TX-1002, GBP 26,000 Supplier invoice 2214, was not authorised by me. Please involve a human specialist and explain the next steps without promising recovery.",
+      "session_id": null,
+      "customer_id": "CUS-0010"
+    }
+  },
+  "response": {
+    "session_id": "ecb7e0979201",
+    "request_id": "d21989e4ea81468c",
+    "answer": "I've escalated your case to a human specialist (escalation reference 1). Here is where things stand:\n\n**What I found**\n- Transaction TX-1002: GBP 26,000.00, outgoing SWIFT transfer, \"Supplier invoice 2214\", dated 2 September 2026, status settled.\n- It is within the dispute window for an unauthorised-debit claim. The deadline is 28 October 2026.\n\n**What happens next**\n- A human specialist will review the case. I have not opened a dispute yet. The specialist will guide you on whether to proceed with one.\n- Please keep any evidence that supports your claim, such as correspondence with the supplier or any record of how the payment was instructed.\n- I can't say whether the funds can be recovered. That depends on the specialist's review and on how the transfer was processed.\n\nIf you'd like, I can also send an account statement to your registered address for your records.",
+    "step_number": 1,
+    "prompt_version": "base.v1+D25+D27",
+    "elapsed_ms": 6281.5,
+    "usage": {
+      "input_tokens": 13184,
+      "output_tokens": 923,
+      "model": "anthropic/claude-haiku-5.5",
+      "cost_usd": 0.000874,
+      "provider_cost_usd": 0.000873
+    }
+  },
+  "error": null,
+  "cost_usd": 0.000873,
+  "guard_cost_usd": 0.000873,
+  "cost_basis": "actual"
+}

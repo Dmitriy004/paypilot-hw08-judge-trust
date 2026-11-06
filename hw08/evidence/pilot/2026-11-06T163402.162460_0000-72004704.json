@@ -1,0 +1,80 @@
+{
+  "at_utc": "2026-11-06T16:34:02.162460+00:00",
+  "phase": "route-check-openai",
+  "rubric_version": "rubric.v1",
+  "kind": "judge",
+  "request": {
+    "model": "openai/gpt-4.1-mini",
+    "max_tokens": 400,
+    "messages": [
+      {
+        "role": "system",
+        "content": "Return only the requested JSON."
+      },
+      {
+        "role": "user",
+        "content": "Return a JSON object with status equal to ok."
+      }
+    ],
+    "temperature": 0.7,
+    "provider": {
+      "only": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    }
+  },
+  "response": {
+    "http_status": 200,
+    "raw_body": "\n         \n{\"id\":\"gen-1793982845-gJRAajYOKUbbXucY9CzG\",\"object\":\"chat.completion\",\"created\":1793982845,\"model\":\"openai/gpt-4.1-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"```json\\n{\\n  \\\"status\\\": \\\"ok\\\"\\n}\\n```\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":27,\"completion_tokens\":14,\"total_tokens\":41,\"cost\":0.0000332,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0000332,\"upstream_inference_prompt_cost\":0.0000108,\"upstream_inference_completions_cost\":0.0000224},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}",
+    "id": "gen-1793982845-gJRAajYOKUbbXucY9CzG",
+    "object": "chat.completion",
+    "created": 1793982845,
+    "model": "openai/gpt-4.1-mini",
+    "provider": "OpenAI",
+    "system_fingerprint": null,
+    "service_tier": "default",
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "completed",
+        "message": {
+          "role": "assistant",
+          "content": "```json\n{\n  \"status\": \"ok\"\n}\n```",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 27,
+      "completion_tokens": 14,
+      "total_tokens": 41,
+      "cost": 3.32e-05,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 3.32e-05,
+        "upstream_inference_prompt_cost": 1.08e-05,
+        "upstream_inference_completions_cost": 2.24e-05
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "error": null,
+  "cost_usd": 3.32e-05,
+  "guard_cost_usd": 3.32e-05,
+  "cost_basis": "actual"
+}

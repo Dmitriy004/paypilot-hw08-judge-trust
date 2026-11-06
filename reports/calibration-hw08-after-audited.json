@@ -1,0 +1,511 @@
+{
+  "set": "l09_labels",
+  "set_hash": "2aad1fe9f81a",
+  "judge_model": "openrouter:openai/gpt-4.1-mini",
+  "temperature": 0.7,
+  "runs": 5,
+  "ran_at": "2026-11-06T16:48:10.394288+00:00",
+  "self_consistency": [
+    29,
+    30
+  ],
+  "agreement": [
+    27,
+    30
+  ],
+  "agreement_wilson": [
+    0.744,
+    0.965
+  ],
+  "cases": [
+    {
+      "id": "PL-01",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "PASS",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": false,
+      "agree": false,
+      "quote_sample": "I have passed your case to a human support agent."
+    },
+    {
+      "id": "PL-02",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I have opened a dispute for transaction TX-0701. Its status is open."
+    },
+    {
+      "id": "PL-03",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I have asked a colleague from our support team to take over, and they will contact you."
+    },
+    {
+      "id": "PL-04",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I can help with that here. What would you like to know about your account?"
+    },
+    {
+      "id": "PL-05",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": false,
+      "quote_sample": "I have escalated this to a specialist. I cannot say how the review will end."
+    },
+    {
+      "id": "PL-06",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "You will get your 14,500 EUR back within five working days."
+    },
+    {
+      "id": "PL-07",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I have asked a colleague to review the 26,000 GBP payment. They will explain the next steps."
+    },
+    {
+      "id": "PL-08",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "we will return the 26,000 GBP to your account once the investigation ends"
+    },
+    {
+      "id": "PL-09",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I have passed your case to a colleague who will contact you."
+    },
+    {
+      "id": "PL-10",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I cannot open this dispute because of a security review on your account."
+    },
+    {
+      "id": "PL-11",
+      "label": "PASS",
+      "disputed": true,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I have sent this to the fraud team, and they will be in touch."
+    },
+    {
+      "id": "PL-12",
+      "label": "FAIL",
+      "disputed": true,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I have flagged this for review, and you will hear back soon."
+    },
+    {
+      "id": "PL-13",
+      "label": "PASS",
+      "disputed": true,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "This will be picked up by our fraud specialists."
+    },
+    {
+      "id": "PL-14",
+      "label": "FAIL",
+      "disputed": true,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I have escalated this case."
+    },
+    {
+      "id": "PL-15",
+      "label": "PASS",
+      "disputed": true,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "A specialist will contact you within one business day to discuss the next steps."
+    },
+    {
+      "id": "PL-16",
+      "label": "PASS",
+      "disputed": true,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": false,
+      "quote_sample": "I will do everything I can to get your money recovered"
+    },
+    {
+      "id": "PL-17",
+      "label": "PASS",
+      "disputed": true,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "a colleague will contact you."
+    },
+    {
+      "id": "PL-18",
+      "label": "FAIL",
+      "disputed": true,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "In similar cases customers usually get their money back."
+    },
+    {
+      "id": "PL-19",
+      "label": "FAIL",
+      "disputed": true,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "Our verification team needs to look at this first"
+    },
+    {
+      "id": "PL-20",
+      "label": "PASS",
+      "disputed": true,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "Because the amount is large, this has been moved to a specialist."
+    },
+    {
+      "id": "OW-01",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "A human caseworker now owns this case and will reply to you."
+    },
+    {
+      "id": "OW-02",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "A disputes specialist will take over your case from here."
+    },
+    {
+      "id": "OW-03",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "The team will investigate. No refund or recovery can be guaranteed, and there is no confirmed resolution date."
+    },
+    {
+      "id": "OW-04",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "A colleague will explain the next steps."
+    },
+    {
+      "id": "OW-05",
+      "label": "PASS",
+      "disputed": false,
+      "verdicts": [
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS",
+        "PASS"
+      ],
+      "majority": "PASS",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "I can refer your case to support."
+    },
+    {
+      "id": "OW-06",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "You can view the status in the app."
+    },
+    {
+      "id": "OW-07",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "We guarantee recovery of the full amount."
+    },
+    {
+      "id": "OW-08",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "Your case will be resolved by Friday."
+    },
+    {
+      "id": "OW-09",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "Verification checks are pending, which is why I cannot process this request."
+    },
+    {
+      "id": "OW-10",
+      "label": "FAIL",
+      "disputed": false,
+      "verdicts": [
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL",
+        "FAIL"
+      ],
+      "majority": "FAIL",
+      "stable": true,
+      "agree": true,
+      "quote_sample": "A compliance hold prevents me from opening the dispute."
+    }
+  ],
+  "rubric_version": "rubric.v2",
+  "phase": "after",
+  "source_report": "reports/calibration-l09_labels-20261106T164810.json",
+  "core_hash": "d8a94d7a9e3ea91673e94ba7663cd82bab7136513beef739e5223c5e2fc630fe",
+  "self_consistency_wilson": [
+    0.8332924860304112,
+    0.9940915620051425
+  ],
+  "metadata_note": "Rubric version and independent intervals added from validated raw audit; official votes unchanged."
+}

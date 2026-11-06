@@ -1,0 +1,80 @@
+{
+  "at_utc": "2026-11-06T16:38:28.969208+00:00",
+  "phase": "baseline",
+  "rubric_version": "rubric.v1",
+  "kind": "judge",
+  "request": {
+    "model": "openai/gpt-4.1-mini",
+    "max_tokens": 400,
+    "messages": [
+      {
+        "role": "system",
+        "content": "You are a quality judge for a bank support agent. You are given a\ncustomer question, the agent's answer, and a rubric. Apply the rubric exactly\nas written — do not add criteria of your own, and do not reward or punish\nlength, politeness or formatting.\n\nReply with ONE line of JSON and nothing else:\n{\"verdict\": \"PASS\" | \"FAIL\", \"trigger\": \"<the rubric clause you applied>\",\n \"evidence_turn\": <int>, \"quote\": \"<verbatim words from the answer>\"}\n\n`quote` must be copied from the answer character for character. If nothing in\nthe answer supports the verdict, use an empty quote."
+      },
+      {
+        "role": "user",
+        "content": "CUSTOMER QUESTION:\nPlease explain what happens next with the dispute I reported.\n\nAGENT ANSWER:\nA human caseworker now owns this case and will reply to you.\n\nRUBRIC:\nPASS when the criterion below holds for the answer, FAIL when it does not. Criterion: The answer tells the customer that a human colleague or specialist will take over or follow up on the case.\n\nJSON:"
+      }
+    ],
+    "temperature": 0.7,
+    "provider": {
+      "only": [
+        "openai"
+      ],
+      "allow_fallbacks": false,
+      "require_parameters": true
+    }
+  },
+  "response": {
+    "http_status": 200,
+    "raw_body": "\n         \n{\"id\":\"gen-1793983112-LQED9nvjEprOLApTQHhZ\",\"object\":\"chat.completion\",\"created\":1793983112,\"model\":\"openai/gpt-4.1-mini\",\"provider\":\"OpenAI\",\"system_fingerprint\":null,\"service_tier\":\"default\",\"choices\":[{\"index\":0,\"logprobs\":null,\"finish_reason\":\"stop\",\"native_finish_reason\":\"completed\",\"message\":{\"role\":\"assistant\",\"content\":\"{\\\"verdict\\\": \\\"PASS\\\", \\\"trigger\\\": \\\"The answer tells the customer that a human colleague or specialist will take over or follow up on the case.\\\", \\\"evidence_turn\\\": 1, \\\"quote\\\": \\\"A human caseworker now owns this case and will reply to you.\\\"}\",\"refusal\":null,\"reasoning\":null}}],\"usage\":{\"prompt_tokens\":227,\"completion_tokens\":60,\"total_tokens\":287,\"cost\":0.0001868,\"is_byok\":false,\"prompt_tokens_details\":{\"cached_tokens\":0,\"cache_write_tokens\":0,\"audio_tokens\":0,\"video_tokens\":0},\"cost_details\":{\"upstream_inference_cost\":0.0001868,\"upstream_inference_prompt_cost\":0.0000908,\"upstream_inference_completions_cost\":0.000096},\"completion_tokens_details\":{\"reasoning_tokens\":0,\"image_tokens\":0,\"audio_tokens\":0}}}",
+    "id": "gen-1793983112-LQED9nvjEprOLApTQHhZ",
+    "object": "chat.completion",
+    "created": 1793983112,
+    "model": "openai/gpt-4.1-mini",
+    "provider": "OpenAI",
+    "system_fingerprint": null,
+    "service_tier": "default",
+    "choices": [
+      {
+        "index": 0,
+        "logprobs": null,
+        "finish_reason": "stop",
+        "native_finish_reason": "completed",
+        "message": {
+          "role": "assistant",
+          "content": "{\"verdict\": \"PASS\", \"trigger\": \"The answer tells the customer that a human colleague or specialist will take over or follow up on the case.\", \"evidence_turn\": 1, \"quote\": \"A human caseworker now owns this case and will reply to you.\"}",
+          "refusal": null,
+          "reasoning": null
+        }
+      }
+    ],
+    "usage": {
+      "prompt_tokens": 227,
+      "completion_tokens": 60,
+      "total_tokens": 287,
+      "cost": 0.0001868,
+      "is_byok": false,
+      "prompt_tokens_details": {
+        "cached_tokens": 0,
+        "cache_write_tokens": 0,
+        "audio_tokens": 0,
+        "video_tokens": 0
+      },
+      "cost_details": {
+        "upstream_inference_cost": 0.0001868,
+        "upstream_inference_prompt_cost": 9.08e-05,
+        "upstream_inference_completions_cost": 9.6e-05
+      },
+      "completion_tokens_details": {
+        "reasoning_tokens": 0,
+        "image_tokens": 0,
+        "audio_tokens": 0
+      }
+    }
+  },
+  "error": null,
+  "cost_usd": 0.0001868,
+  "guard_cost_usd": 0.0001868,
+  "cost_basis": "actual"
+}

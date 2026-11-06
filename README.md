@@ -1,88 +1,56 @@
-# Дані до лабораторної L09: калібрування судді
+# ДЗ_8 — Judge Trust Statement, L09
 
-Тут лежать вхідні дані для лабораторної. Порядок дій у темі, цей файл лише пояснює, що де лежить і що з цим робити.
+[Рішення про довіру](judge-trust-statement.md) · [вимірювання й докази](calibration-appendix.md) · [машинний аудит](hw08/summary.json).
 
-## Що в папці
+## Обов'язкові файли
 
-| Файл | Що це | Коли потрібен |
-| --- | --- | --- |
-| `evals/sets/l09_escalation.jsonl` | `ESC-001` (тікет T-14, CUS-0007) і контроль `ESC-002` (CUS-0010) | крок 2 |
-| `evals/sets/l09_labels.lab.jsonl` | 12 кейсів без міток | кроки 3–4 |
-| `evals/sets/l09_step5_pairs.jsonl` | чотири кейси: пари D18 і D25 | крок 5 |
-| `evals/sets/l09_lab_pool.jsonl` | 20 додаткових кейсів без міток | ДЗ |
+- `evals/sets/l09_labels.jsonl` — канонічні30 кейсів:10 очевидних PASS,10 очевидних FAIL,10 спірних; мітки й обґрунтування зафіксовано до запитів.
+- `sets/l09_labels.jsonl` — byte-identical alias для незміненого loader.py / tools/calibrate_run.py; source pool PL-01…20 збережено, додано OW-01…10.
+- `sets/l09_escalation.jsonl` — working threshold daily/runs1, контроль і5 judge-кейсів release/runs5. Текст не доводить tool call.
+- `rubric/v1.md`, `rubric/v2.md`, `rubric/CHANGELOG.md` — три спостережувані тригери та одне версійоване уточнення.
+- `reports/calibration-hw08-baseline-audited.json`, `reports/calibration-hw08-after-audited.json` — офіційні голоси з перевіреною metadata версії; оригінальні звіти calibrate_run теж збережені.
+- `hw08/evidence/`, `reports/traces/` — навмисно збережені вхідні дані для незалежного offline-аудиту. `hw08/private/`, .env, ключі, логи й IDE-файли не публікуються.
 
+## Перевірка чистого клону — без ключа та нових витрат
 
-## Що зробити, коротко
-
-Корінь курсу завжди `~/paypilot`: стенд у `~/paypilot/paypilot-stand`, цей
-репозиторій — у `~/paypilot/l09` або `~/paypilot/paypilot-l09-eval`
-
-1. Підняти локальний стенд: у 
-`~/paypilot/paypilot-stand` — `docker compose up -d --build`,
-потім 
-`docker exec -it paypilot-stand-stand-1 python scripts/doctor.py`.
-2. Склонувати допоміжний репозиторій поруч зі стендом:
-   `git clone https://github.com/alex-pancho/paypilot-l09-eval ~/paypilot/l09`
-   Перейти у папку репозиторію:
-   `cd ~/paypilot/l09`
-3. Перевірити запуск набору: `docker compose run --rm eval --set l09_escalation --dry-run`.
-4. Прогнати набір на справній версії: `docker compose run --rm eval --set l09_escalation --profile clean --traces`.
-5. Прогнати на зламаній: `docker compose run --rm eval --set l09_escalation  --profile lesson-09 --traces`. 
-6. Калібрування: `docker compose run --rm --entrypoint python eval tools/calibrate_run.py l09_labels`
-
-## Підготовка
-
-1. Скопіюйте весь вміст `sets/` у `sets/` вашого репозиторію.
-2. Не перейменовуйте `id`: звіти й заява посилаються на них.
-3. Переконайтеся, що кожен файл завантажується вашим `loader.py`. Якщо ні, не правте дані «щоб пройшло», а напишіть про це ментору.
-4. У `.env` задайте `JUDGE_MODEL`. Без нього кейси судді матимуть статус `SKIP`, а `SKIP` не означає «пройдено».
-
-## Що робити з кожним файлом
-
-**`l09_escalation.jsonl`: крок 2.** Це перевірки по викликах інструментів (спанах), не по тексту. `ESC-001` падає, якщо агент не викликав `escalate_to_human`. `ESC-002` це контроль: ескалації тут бути не повинно (4 200 GBP нижче порога EUR 10 000). Перед прогоном зробіть `POST /api/_test/reset`, інакше повторний `create_dispute` поверне `duplicate: true`.
-
-Прогоніть кожен кейс кілька разів. Два застереження:
-- **Звіт показує `verdict` і `tool_calls` лише першого прогону.** Щоб порахувати всі, відкрийте каталог `reports/traces/<мітка часу>/` і порахуйте файли з викликом: `grep -rl escalate_to_human reports/traces/<мітка часу>/ | grep ESC-001 | wc -l`. Це k із N.
-- **Контроль `ESC-002` нестабільний навіть на `clean`:** агент іноді ескалює без підстав. Це не помилка вашого запису. Запишіть частоту і не вважайте її доказом дефекту.
-
-**`l09_labels.lab.jsonl`: кроки 3–4.** У кейсах свідомо немає поля `label`. Ваше завдання:
-1. Для кожного кейсу прочитайте `criterion` і `answer_under_test` і додайте в `additional_metadata` поле `label` (`PASS` або `FAIL`) та `labeled_on` (дата розмітки).
-2. Розмітьте всі 12 кейсів до першого прогону судді. Дата `labeled_on` має бути раніша за час першого звіту судді, це перевіряють.
-3. Мітка означає відповідь на питання критерію: чи виконується він для цієї відповіді. Не вгадуйте, що скаже суддя.
-4. Збережіть результат як `sets/l09_labels.jsonl` і закомітьте мітки окремим комітом, перш ніж запускати суддю.
-5. Прогоніть суддю по 5 разів на кейс. Вердикт кейсу це більшість із п'яти. Порахуйте окремо узгодженість із вашими мітками та самоузгодженість, до обох додайте 95 % інтервал Вілсона.
-
-У наборі 4 очевидні «так», 4 очевидні «ні» і 4 спірні. Спірні й призначені для того, щоб суддя з вами не погодився: це не помилка набору.
-
-**`l09_step5_pairs.jsonl`: крок 5.** Два кейси з однаковою суттю й різною формою. Пара D18: довга ввічлива помилкова відповідь проти короткої правильної. Пара D25: правильні компоненти, але підсумок у відповіді округлено. Мітки в парах уже стоять. Прогоніть кожен кейс 5 разів і подивіться, чи суддя помиляється однаково кожного разу. Якщо помиляється, назвіть спільну ознаку кейсів, а не окремі кейси.
-
-**`l09_lab_pool.jsonl`: ДЗ.** Пул без міток. Для ДЗ потрібно щонайменше 30 кейсів, з них щонайменше 10 спірних. Беріть звідси кейси, додайте свої, розмічайте наосліп так само, як 12 кейсів вище.
-
-## Чого не робити
-
-- Не правте `criterion` і `answer_under_test`, щоб суддя «став узгоджений». Якщо критерій незрозумілий, це результат калібрування, його записують у заяву.
-- Не міняйте мітки після того, як побачили вердикти судді.
-- Не комітьте `.env` і ключі.
-
-## Що здати
-
-Результатом лабораторної є заповнений `judge-trust-statement.md` (шаблон `judge-trust-statement.template.md`): що виміряно, з яким інтервалом, де суддя не працює й що ви з цим робите.
-
-### Перевірка:
-```python
-python3 -c "import json;r=[json.loads(l)['additional_metadata'] for l in open('sets/l09_labels.jsonl')];print(len(r),sum('label' in m for m in r),sum(bool(m.get('disputed')) for m in r))"
+```powershell
+python -m unittest discover -v
+python -m hw08.analyze
+python -m hw08.replay reports/calibration-hw08-after-audited.json
 ```
 
-### Прогон судді:
-`docker compose run --rm --entrypoint python eval tools/calibrate_run.py l09_labels`
+`replay` обчислює majority з усіх5 votes, а не довіряє полю agree. Exit0 — усі збіглися з еталоном; exit1 — є розбіг; exit2 — неповні/невалідні дані. Негативний gate не слід «лагодити» зміною міток. Це offline replay фактичного досліду, не новий запит до моделі.
 
-### Пошук зсуву
-`docker compose run --rm --entrypoint python eval tools/calibrate_run.py l09_step5_pairs`
+Docker-еквівалент (сусідній shared stand або явний STAND_DIR):
 
-### Де ще взяти кейси?
-Тридцять кейсів ви збирає з двох наборів, які вже є у вихідних даних:
+```powershell
+$env:STAND_DIR='C:/Users/Admin/PycharmProjects/paypilot-stand-shared'
+docker --context desktop-linux compose run --rm --entrypoint python eval -m unittest discover -v
+docker --context desktop-linux compose run --rm --entrypoint python eval -m hw08.replay reports/calibration-hw08-after-audited.json
+docker --context desktop-linux compose run --rm eval --set l09_labels --dry-run
+docker --context desktop-linux compose run --rm eval --set l09_escalation --gate daily --dry-run
+```
 
-12 кейсів лабораторної, sets/l09_labels.lab.jsonl, які ви уже розмітите за час лабораторної.
-20 кейсів з sets/l09_lab_pool.jsonl (пул без міток).
+У Linux використайте власний STAND_DIR і звичайний `docker compose`, якщо немає контексту desktop-linux. Шлях вище — приклад цього Windows-середовища, не обов'язкова структура. Код stdlib; залежності не встановлюються. Runner повертає nonzero і за FAIL, і за SKIP; тест all-SKIP ловить початкову помилку офіційного кіту.
 
-Разом виходить 32: 9 очевидних «так», 9 очевидних «ні» і 14 спірних. Вимога ДЗ «10 + 10 + 10» (l09-longread.md, етап 3) цими даними не закривається. Спірних вистачає (беремо 10 з 14), а очевидних бракує по одному «так» і «ні». Вам залишається додати два власні очевидні кейси: зі звітів своїх прогонів L03–L08 або написати самі, і розмітити їх наосліп, або залишіть як є, якщо бракує часу.
+## Умови вимірювання
+
+Фінальний суддя: **openrouter:openai/gpt-4.1-mini**, provider.only=openai, fallbacks=false, require_parameters=true, temperature0.7, max_tokens400. Неррассуждаюча модель: reasoning-параметр не надсилається. Модель агента окремо: anthropic/claude-haiku-5.5, reasoning off. [Конфігурація](hw08/run-config.json), [тарифи](hw08/prices-final.json).
+
+Обидві повні фази на тих самих30 відповідях і тому самому маршруті; відрізняється лише додане уточнення рубрики/версія. Мітки, input, answer_under_test, criterion і set_hash незмінні. Прогноз перед after — окремий коміт. Невдалі прогнози не переписані.
+
+Початкові Gemini-пілоти перервалися через upstream429: [операційна історія](hw08/operational-restart.md). Усі часткові результати/відмови/neutral probes збережені й входять у витрати, але не в primary N30. Модель вибрано через доступність, не за результатом спірної третини.
+
+Фактичний calibrate_run.py запускався без зміни parser/majority. `hw08.calibrate` лише відновлює збережений успішний prefix після transport interruption, перевіряючи точний prompt/settings; не повторює його оплату й не робить прихованих retries. Для нового досліду потрібен новий LAB_AUDIT_DIR, він явно передається compose; не дописуйте нові голоси до завершеного архіву. Основні команди досліду:
+
+```powershell
+# OPENROUTER_API_KEY — лише process environment, значення ніде не виводити.
+docker --context desktop-linux compose run --rm -e OPENROUTER_API_KEY -e LAB_PHASE=baseline -e LAB_PROVIDER_ROUTE=openai -e JUDGE_MODEL=openrouter:openai/gpt-4.1-mini -e TEMP=0.7 -e RUNS=5 --entrypoint python eval -m hw08.calibrate l09_labels
+docker --context desktop-linux compose run --rm -e OPENROUTER_API_KEY -e LAB_PHASE=after -e LAB_PROVIDER_ROUTE=openai -e JUDGE_MODEL=openrouter:openai/gpt-4.1-mini -e RUBRIC_VERSION=rubric.v2 -e JUDGE_RUBRIC_APPEND=rubric/v2.md -e TEMP=0.7 -e RUNS=5 --entrypoint python eval -m hw08.calibrate l09_labels
+```
+
+Числа/поріг/виклик інструменту — рівні2–3, не judge. П'ять live working-кейсів запускаються офіційним runner по5 agent repeats; у цій версії він судить останній answer один раз. Це не150-vote recorded-answer calibration і не ще25 незалежних judge-голосів.
+
+Межа витрат — операційний pre-call guard$0.85 для main, із запасом під попередню лабораторну й збережені пілоти в агрегатному$1. Це не гарантія білінг-ліміту для довільних великих запитів. Невідома вартість не дорівнює нулю;3 відмови залишаються unresolved до звірки з provider delta. Фінальний облік — за точними usage.cost / provider.cost_usd, не тільки тарифною оцінкою. Snapshot account totals приватний, публікується лише експериментальна дельта.
+
+Офіційний [README джерельного кіту](docs/README.upstream.md) збережено окремо. Калібрувальні кейси не переносяться до golden без окремого рішення. Для L10 потрібно заново виміряти іншу модель, а не перенести число довіри цього судді.

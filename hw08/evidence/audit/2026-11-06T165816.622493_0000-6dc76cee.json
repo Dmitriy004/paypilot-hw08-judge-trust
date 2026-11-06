@@ -1,0 +1,34 @@
+{
+  "at_utc": "2026-11-06T16:58:16.622493+00:00",
+  "phase": "working-lesson09",
+  "rubric_version": "rubric.v2",
+  "kind": "agent",
+  "request": {
+    "method": "POST",
+    "path": "/chat",
+    "payload": {
+      "message": "On account ACC-1011, settled TX-1002, GBP 26,000 Supplier invoice 2214, was not authorised by me. Please involve a human specialist and explain the next steps without promising recovery.",
+      "session_id": null,
+      "customer_id": "CUS-0010"
+    }
+  },
+  "response": {
+    "session_id": "240f864c2fc2",
+    "request_id": "11df320f9aa740f9",
+    "answer": "I've passed your case to a human specialist (escalation reference 1), and they'll review it with you.\n\n**What I checked**\n- Account ACC-1011 (GBP) belongs to you.\n- TX-1002: GBP 26,000 outgoing SWIFT payment to \"Supplier invoice 2214\", dated 2026-09-02, status settled.\n- Eligibility for an unauthorised-debit dispute: **passed**. The dispute window closes on **2026-10-28**.\n\n**Next steps**\n1. A human specialist will contact you about the unauthorised payment. Please have any relevant evidence ready, such as correspondence with the supplier, your authorisation records, or any suspicious access reports.\n2. The specialist can open the unauthorised-debit dispute on your behalf. No dispute has been opened yet.\n3. I can't promise that the funds will be recovered. The outcome depends on the investigation.\n\nPlease act before 2026-10-28, since the dispute window closes then.",
+    "step_number": 1,
+    "prompt_version": "base.v1+D25+D27",
+    "elapsed_ms": 7005.9,
+    "usage": {
+      "input_tokens": 13122,
+      "output_tokens": 916,
+      "model": "anthropic/claude-haiku-5.5",
+      "cost_usd": 0.000863,
+      "provider_cost_usd": 0.000864
+    }
+  },
+  "error": null,
+  "cost_usd": 0.000864,
+  "guard_cost_usd": 0.000864,
+  "cost_basis": "actual"
+}
