@@ -4,7 +4,7 @@
 
 Complete all five stages and mentor chain-ready checks at GoIT lesson54593649/homework, then publish a separate public GitHub repository on main and submit its URL. User explicitly authorized execution, commits, publication and final submission without further questions. Do not add authorship claims or claim independent expert annotation.
 
-Use official kit f5c235aa10a505f9d6f9e422ffd66917578c537b, shared stand74f1995ca8e8e64e4526e374535c2c4e71a2bde1. Preserve prior labs/homework and shared .env. Keep the previously approved $1 aggregate provider cap; prior lab cost0.054354895USD. Existing OpenRouter access, agent anthropic/claude-haiku-5.5, judge openrouter:google/gemini-2.5-flash, temperature0.7, output400, reasoning off. Never publish keys, account totals or local IDE files.
+Use official kit f5c235aa10a505f9d6f9e422ffd66917578c537b, shared stand74f1995ca8e8e64e4526e374535c2c4e71a2bde1. Preserve prior labs/homework and shared .env. Keep the previously approved $1 aggregate provider cap; prior lab cost0.054354895USD. Existing OpenRouter access, agent anthropic/claude-haiku-5.5. Initial Gemini pilot was interrupted three times by upstream429 (including priority); final full baseline/after use openrouter:openai/gpt-4.1-mini on the fixed openai endpoint, temperature0.7, output400, non-reasoning. All pilots and charges retained; same30 labels, no disputed pilot outcomes inspected. Main cap$0.85 leaves room for pilots/prior lab. Never publish keys, account totals or local IDE files.
 
 ## Approach
 
