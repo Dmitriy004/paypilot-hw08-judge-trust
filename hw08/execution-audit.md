@@ -22,6 +22,8 @@ Both fixes were made in one offline RED→GREEN pass without paid calls, relabel
 
 The final clean-clone check also exposed newline normalization of the working JSONL: live byte hash70f163adf8c1 became2cce8501487e on checkout, although parsed cases were identical. An assertion against the retained report failed on that clone. The exact originally measured bytes are now stored with a specific `.gitattributes -text` rule, plus `test_working_set_byte_hash_matches_retained_live_reports`; no case or report was rewritten. Canonical calibration aliases remain LF and retain their frozen hash. The first dry-run check was repeated after removing an early-terminating stdout pipeline; both full-output dry-runs exited0.
 
+Final fresh clone of `3fdc2bc5087d762007e2d2098db2009189de3b24` verified on06.11.2026: no .env; **31/31 native tests and31/31 Docker tests**; raw-evidence audit succeeds; native and Docker replay both exit1 on the same complete after-report. Both Docker dry-runs exit0, with canonical hash2aad1fe9f81a and working hash70f163adf8c1 exactly matching retained reports. No provider key, live stand call or new payment was needed for these checks. Only this audit text was added after that verified code/data commit.
+
 ## Review scope decisions
 
 -Independent second annotator/holdout remains absent and explicitly disclosed. No generalized production reliability claim; cost if wrong: reference bias remains.
