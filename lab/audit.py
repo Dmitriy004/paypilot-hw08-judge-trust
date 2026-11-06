@@ -2,6 +2,7 @@
 import json
 import math
 import os
+import re
 import uuid
 from datetime import datetime, timezone
 from pathlib import Path
@@ -14,6 +15,7 @@ def clean(value):
     if isinstance(value, list):
         return [clean(v) for v in value]
     if isinstance(value, str):
+        value = re.sub(r'("user_id"\s*:\s*")[^"]*"', r'\1[REDACTED]"', value)
         for name in ('OPENROUTER_API_KEY', 'OPENAI_API_KEY', 'ANTHROPIC_API_KEY'):
             secret = os.environ.get(name)
             if secret:
